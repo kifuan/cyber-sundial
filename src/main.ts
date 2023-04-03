@@ -2,6 +2,11 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 const RADIUS = 15
+const LIGHT_SPEED = 0.05
+const BG_COLOR = 0xCCCCCC
+const SCALE_COLOR = 0x848482
+const WHITE_COLOR = 0xFFFFFF
+const AMBIENT_COLOR = 0x222222
 
 const renderer = new THREE.WebGLRenderer({ antialias: true })
 renderer.setPixelRatio(window.devicePixelRatio)
@@ -18,12 +23,12 @@ controls.target.set(0, 10, 0)
 controls.update()
 
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0xCCCCCC)
-scene.fog = new THREE.FogExp2(0xCCCCCC, 0.002)
+scene.background = new THREE.Color(BG_COLOR)
+scene.fog = new THREE.FogExp2(BG_COLOR, 0.002)
 
 // Objects
 const panelGeo = new THREE.CylinderGeometry(RADIUS, RADIUS, 1, 150)
-const material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF })
+const material = new THREE.MeshStandardMaterial({ color: WHITE_COLOR })
 const panelMesh = new THREE.Mesh(panelGeo, material)
 panelMesh.position.set(0, 0, 0)
 panelMesh.receiveShadow = true
@@ -38,7 +43,7 @@ scene.add(poleMesh)
 // Scales
 for (let i = 0; i < 12; i++) {
   const scaleGeo = new THREE.BoxGeometry(0.5, 0.5, RADIUS / 4)
-  const scaleMat = new THREE.MeshStandardMaterial({ color: 0x848482 })
+  const scaleMat = new THREE.MeshStandardMaterial({ color: SCALE_COLOR })
   const scaleMesh = new THREE.Mesh(scaleGeo, scaleMat)
 
   const angle = i * Math.PI / 6 // Divide circle into 12 parts
@@ -49,17 +54,17 @@ for (let i = 0; i < 12; i++) {
 }
 
 // Lights
-scene.add(new THREE.AmbientLight(0x222222))
+scene.add(new THREE.AmbientLight(AMBIENT_COLOR))
 
-const dirLight1 = new THREE.DirectionalLight(0xFFFFFF, 0.1)
+const dirLight1 = new THREE.DirectionalLight(WHITE_COLOR, 0.1)
 dirLight1.position.set(10, 10, 10)
 scene.add(dirLight1)
 
-const dirLight2 = new THREE.DirectionalLight(0xFFFFFF, 0.5)
+const dirLight2 = new THREE.DirectionalLight(WHITE_COLOR, 0.5)
 dirLight2.position.set(-10, -10, -10)
 scene.add(dirLight2)
 
-const spotLight = new THREE.SpotLight(0xFFFFFF)
+const spotLight = new THREE.SpotLight(WHITE_COLOR)
 spotLight.angle = Math.PI / 5
 spotLight.position.set(40, 40, 10)
 spotLight.castShadow = true
@@ -82,7 +87,7 @@ document.addEventListener('resize', () => {
 function animate() {
   requestAnimationFrame(animate)
   const delta = clock.getDelta()
-  spotLightContainer.rotateY(delta * 0.05)
+  spotLightContainer.rotateY(delta * LIGHT_SPEED)
   renderer.render(scene, camera)
 }
 
