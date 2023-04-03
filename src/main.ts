@@ -16,7 +16,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000)
 
-if (window.innerWidth <= 400)
+if (window.innerWidth <= window.innerHeight)
   camera.position.set(20, 70, 70)
 else
   camera.position.set(15, 45, 50)
