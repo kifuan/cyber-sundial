@@ -67,6 +67,7 @@ spotLight.castShadow = true
 const spotLightContainer = new THREE.Object3D()
 spotLightContainer.add(spotLight)
 scene.add(spotLightContainer)
+spotLightContainer.rotateY(2 * Math.PI * Math.random())
 
 const clock = new THREE.Clock()
 
