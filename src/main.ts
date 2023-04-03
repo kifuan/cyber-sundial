@@ -15,7 +15,11 @@ renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000)
-camera.position.set(10, 45, 40)
+
+if (window.innerWidth <= 400)
+  camera.position.set(20, 70, 70)
+else
+  camera.position.set(15, 45, 50)
 
 // Mouse control
 const controls = new OrbitControls(camera, renderer.domElement)
