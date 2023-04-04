@@ -9,7 +9,7 @@ const WHITE_COLOR = 0xFFFFFF
 const AMBIENT_COLOR = 0x222222
 
 const options = {
-  lightSpeed: 0.01,
+  lightSpeed: 0.15,
   rotateDirection: -1,
   showIcon: true,
   active: true,
@@ -31,7 +31,7 @@ gui.add(options, 'github').name('GitHub')
 function createSpotLight(scene: THREE.Scene): THREE.Object3D {
   const light = new THREE.SpotLight()
   light.angle = Math.PI / 5
-  light.position.set(40, 40, 20)
+  light.position.set(40, 40, 10)
   light.castShadow = true
 
   const container = new THREE.Object3D()
@@ -108,11 +108,11 @@ for (let i = 0; i < 12; i++) {
 }
 
 // Lights
-scene.add(new THREE.AmbientLight(AMBIENT_COLOR))
+scene.add(new THREE.AmbientLight(AMBIENT_COLOR, 1))
 
-const light3 = new THREE.DirectionalLight(WHITE_COLOR, 0.5)
-light3.position.set(-10, -10, -10)
-scene.add(light3)
+const lightBottom = new THREE.DirectionalLight(WHITE_COLOR, 0.5)
+lightBottom.position.set(-10, -10, -10)
+scene.add(lightBottom)
 
 const spotLight = createSpotLight(scene)
 
