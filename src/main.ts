@@ -9,9 +9,9 @@ const WHITE_COLOR = 0xFFFFFF
 const AMBIENT_COLOR = 0x222222
 
 const options = {
-  lightSpeed: 0.15,
-  rotateDirection: -1,
-  showIcon: true,
+  speed: 0.15,
+  direction: -1,
+  icon: true,
   active: true,
   github: () => {
     window.open('https://github.com/kifuan/cyber-sundial')
@@ -22,10 +22,10 @@ const gui = new GUI({
   title: 'Options',
 })
 
-gui.add(options, 'showIcon').name('Icon').listen()
+gui.add(options, 'icon').name('Icon').listen()
 gui.add(options, 'active').name('Active').listen()
-gui.add(options, 'lightSpeed', 0.01, 1).name('Speed').listen()
-gui.add(options, 'rotateDirection', { Clockwise: -1, AntiClockwise: 1 }).name('Direction').listen()
+gui.add(options, 'speed', 0.01, 1).name('Speed').listen()
+gui.add(options, 'direction', { Clockwise: -1, AntiClockwise: 1 }).name('Direction').listen()
 gui.add(options, 'github').name('GitHub')
 
 function createSpotLight(scene: THREE.Scene): THREE.Object3D {
@@ -124,9 +124,9 @@ document.addEventListener('resize', () => {
 
 function animate() {
   requestAnimationFrame(animate)
-  iconMesh.visible = options.showIcon
+  iconMesh.visible = options.icon
   if (options.active)
-    spotLight.rotateY(options.lightSpeed * options.rotateDirection)
+    spotLight.rotateY(options.speed * options.direction)
 
   renderer.render(scene, camera)
 }
