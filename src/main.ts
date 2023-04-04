@@ -26,18 +26,6 @@ gui.add(options, 'rotateDirection', { Clockwise: -1, AntiClockwise: 1 }).name('D
 gui.add(options, 'showIcon').name('Show Icon').listen()
 gui.add(options, 'github').name('GitHub')
 
-function createNormalLights(scene: THREE.Scene) {
-  scene.add(new THREE.AmbientLight(AMBIENT_COLOR))
-
-  const light1 = new THREE.DirectionalLight(WHITE_COLOR, 0.1)
-  light1.position.set(10, 10, 10)
-  scene.add(light1)
-
-  const light2 = new THREE.DirectionalLight(WHITE_COLOR, 0.5)
-  light2.position.set(-10, -10, -10)
-  scene.add(light2)
-}
-
 function createSpotLight(scene: THREE.Scene): THREE.Object3D {
   const light = new THREE.SpotLight()
   light.angle = Math.PI / 5
@@ -72,7 +60,7 @@ const scene = new THREE.Scene()
 scene.background = new THREE.Color(BG_COLOR)
 scene.fog = new THREE.FogExp2(BG_COLOR, 0.002)
 
-// Objects.
+// Objects
 const material = new THREE.MeshStandardMaterial({ color: WHITE_COLOR })
 
 const panelGeo = new THREE.CylinderGeometry(PANEL_RADIUS, PANEL_RADIUS, 1, 150)
@@ -116,7 +104,17 @@ for (let i = 0; i < 12; i++) {
   scene.add(scaleMesh) // Add the scale to the panel mesh
 }
 
-createNormalLights(scene)
+// Lights
+scene.add(new THREE.AmbientLight(AMBIENT_COLOR))
+
+const light1 = new THREE.DirectionalLight(WHITE_COLOR, 0.1)
+light1.position.set(10, 10, 10)
+scene.add(light1)
+
+const light2 = new THREE.DirectionalLight(WHITE_COLOR, 0.5)
+light2.position.set(-10, -10, -10)
+scene.add(light2)
+
 const spotLight = createSpotLight(scene)
 
 document.addEventListener('resize', () => {
