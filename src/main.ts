@@ -9,7 +9,7 @@ const WHITE_COLOR = 0xFFFFFF
 const AMBIENT_COLOR = 0x222222
 
 const options = {
-  speed: 0.15,
+  speed: 0.5,
   direction: -1,
   icon: true,
   active: true,
@@ -24,7 +24,7 @@ const gui = new GUI({
 
 gui.add(options, 'icon').name('Icon').listen()
 gui.add(options, 'active').name('Active').listen()
-gui.add(options, 'speed', 0.01, 1).name('Speed').listen()
+gui.add(options, 'speed', 0.1, 10).name('Speed').listen()
 gui.add(options, 'direction', { Clockwise: -1, AntiClockwise: 1 }).name('Direction').listen()
 gui.add(options, 'github').name('GitHub')
 
@@ -122,11 +122,13 @@ document.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight)
 })
 
+const clock = new THREE.Clock()
 function animate() {
   requestAnimationFrame(animate)
   iconMesh.visible = options.icon
+  const delta = clock.getDelta()
   if (options.active)
-    spotLight.rotateY(options.speed * options.direction)
+    spotLight.rotateY(options.speed * options.direction * delta)
 
   renderer.render(scene, camera)
 }
