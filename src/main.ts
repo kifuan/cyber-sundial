@@ -1,12 +1,20 @@
 import * as THREE from 'three'
+import GUI from 'lil-gui'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 const PANEL_RADIUS = 15
-const LIGHT_SPEED = 0.05
 const BG_COLOR = 0xCCCCCC
 const SCALE_COLOR = 0x848482
 const WHITE_COLOR = 0xFFFFFF
 const AMBIENT_COLOR = 0x222222
+
+const options = {
+  lightSpeed: 0.1,
+  rotateDirection: -1,
+  github: () => {
+    window.open('https://github.com/kifuan/cyber-sundial')
+  },
+}
 
 function createObjects(scene: THREE.Scene) {
   const material = new THREE.MeshStandardMaterial({ color: WHITE_COLOR })
@@ -50,7 +58,7 @@ function createNormalLights(scene: THREE.Scene) {
 }
 
 function createSpotLight(scene: THREE.Scene): THREE.Object3D {
-  const light = new THREE.SpotLight(WHITE_COLOR)
+  const light = new THREE.SpotLight()
   light.angle = Math.PI / 5
   light.position.set(40, 40, 10)
   light.castShadow = true
@@ -60,6 +68,16 @@ function createSpotLight(scene: THREE.Scene): THREE.Object3D {
   scene.add(container)
   container.rotateY(2 * Math.PI * Math.random())
   return container
+}
+
+function createGUI() {
+  const gui = new GUI({
+    title: 'Options',
+  })
+
+  gui.add(options, 'lightSpeed', 0.1, 10).name('Speed').listen()
+  gui.add(options, 'rotateDirection', { Clockwise: -1, AntiClockwise: 1 }).name('Direction').listen()
+  gui.add(options, 'github').name('GitHub')
 }
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000)
@@ -86,6 +104,7 @@ scene.fog = new THREE.FogExp2(BG_COLOR, 0.002)
 // Create objects.
 createObjects(scene)
 createNormalLights(scene)
+createGUI()
 const spotLight = createSpotLight(scene)
 
 document.addEventListener('resize', () => {
@@ -98,7 +117,7 @@ const clock = new THREE.Clock()
 
 function animate() {
   requestAnimationFrame(animate)
-  spotLight.rotateY(clock.getDelta() * LIGHT_SPEED)
+  spotLight.rotateY(clock.getDelta() * options.lightSpeed * options.rotateDirection)
   renderer.render(scene, camera)
 }
 
