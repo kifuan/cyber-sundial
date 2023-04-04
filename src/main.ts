@@ -96,6 +96,7 @@ for (let i = 0; i < 12; i++) {
     color: SCALE_COLOR,
   })
   const scaleMesh = new THREE.Mesh(scaleGeo, scaleMat)
+  scaleMesh.scale.set(1, 0.1, 1)
 
   const angle = i * Math.PI / 6 // Divide circle into 12 parts
   scaleMesh.position.set(Math.cos(angle) * PANEL_RADIUS * 0.85, 0.5, Math.sin(angle) * PANEL_RADIUS * 0.85)
