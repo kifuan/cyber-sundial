@@ -79,7 +79,7 @@ scene.add(poleMesh)
 
 // Icon
 const iconMat = new THREE.MeshStandardMaterial({
-  map: new THREE.TextureLoader().load('icon.svg'),
+  map: new THREE.TextureLoader().load('icon.png'),
   transparent: true,
   color: WHITE_COLOR,
   side: THREE.FrontSide,
